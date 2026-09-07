@@ -29,6 +29,7 @@ Inventario/
 │   ├── patch_app_schema.sql  # Ajustes de esquema para la app
 │   └── migrations/           # Scripts SQL históricos (manuales)
 ├── scripts/                  # Mantenimiento CLI (no forman parte del flujo web)
+├── docker/                   # Imagen PHP/Apache y Compose
 └── docs/                     # Documentación del proyecto
 ```
 
