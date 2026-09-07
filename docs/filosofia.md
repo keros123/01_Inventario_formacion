@@ -63,7 +63,7 @@ Ver `docs/promp` para replicar el estilo gráfico con otra herramienta o IA.
 
 - **Organización:** Centro de Formación de Comercio y Servicios (CCyS).
 - **Usuarios típicos:** administradores del inventario, docentes o personal que solicita préstamo de equipos.
-- **Despliegue:** imagen Docker (`docker compose up`) o LAMP local (XAMPP), carpeta pública en `public/`. En el contenedor la URL base es la raíz; en XAMPP se detecta sola.
+- **Despliegue:** entorno LAMP local (XAMPP u similar), carpeta pública en `public/`, URL base configurable en `config/app.php`.
 
 ## Convenciones culturales del código
 
