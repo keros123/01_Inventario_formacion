@@ -270,7 +270,22 @@ sequenceDiagram
 
 ## Desarrollo y despliegue
 
-### Arranque local típico
+### Arranque con Docker
+
+```bash
+docker compose up -d --build
+```
+
+La app queda en `http://localhost:8080` (document root = `public/`). Las credenciales salen de `.env`; no se copian dentro de la imagen.
+
+Sin Compose:
+
+```bash
+docker build -t inventario-formacion .
+docker run --rm --env-file .env -p 8080:80 inventario-formacion
+```
+
+### Arranque local típico (XAMPP)
 
 1. Importar `database/inventario_cm.sql` o crear BD y dejar que Migrator complete el esquema.
 2. Ajustar `config/database.php` y `config/app.php`.

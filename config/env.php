@@ -55,7 +55,7 @@ function env(string $key, mixed $default = null): mixed
 {
     loadProjectEnv();
 
-    $value = $_ENV[$key] ?? getenv($key);
+    $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
     if ($value === false || $value === null || $value === '') {
         return $default;
     }

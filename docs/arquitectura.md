@@ -6,7 +6,10 @@ Aplicación web **PHP 8+** con patrón **MVC personalizado**, sin framework ni a
 
 ```
 Inventario/
-├── index.php                 # Redirige a public/
+├── Dockerfile                # Imagen PHP 8.3 + Apache
+├── docker-compose.yml        # Arranque del contenedor
+├── docker/                   # Apache, php.ini y entrypoint
+├── index.php                 # Redirige a public/ (XAMPP / docroot del proyecto)
 ├── .env / .env.example       # Credenciales (no versionar .env)
 ├── config/
 │   ├── app.php               # Nombre, base_url, rutas de uploads
