@@ -7,6 +7,8 @@ Aplicación web **PHP 8+** con patrón **MVC personalizado**, sin framework ni a
 ```
 Inventario/
 ├── index.php                 # Redirige a public/
+├── Dockerfile                # Imagen (Render lo busca en la raíz)
+├── render.yaml               # Ruta de build para Render
 ├── .env / .env.example       # Credenciales (no versionar .env)
 ├── config/
 │   ├── app.php               # Nombre, base_url, rutas de uploads
@@ -29,7 +31,7 @@ Inventario/
 │   ├── patch_app_schema.sql  # Ajustes de esquema para la app
 │   └── migrations/           # Scripts SQL históricos (manuales)
 ├── scripts/                  # Mantenimiento CLI (no forman parte del flujo web)
-├── docker/                   # Imagen PHP/Apache y Compose
+├── docker/                   # Apache, php.ini, entrypoint y Compose
 └── docs/                     # Documentación del proyecto
 ```
 

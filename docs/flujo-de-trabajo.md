@@ -272,7 +272,7 @@ sequenceDiagram
 
 ### Arranque con Docker
 
-Todo el material del contenedor está en `docker/` (nada extra en la raíz):
+El `Dockerfile` está en la raíz (lo exige Render). Apache, `php.ini` y Compose siguen en `docker/`.
 
 ```bash
 docker compose -f docker/compose.yml up -d --build
@@ -281,9 +281,11 @@ docker compose -f docker/compose.yml up -d --build
 La app queda en `http://localhost:8080`. Las credenciales salen de `.env`.
 
 ```bash
-docker build -f docker/Dockerfile -t inventario-formacion .
+docker build -t inventario-formacion .
 docker run --rm --env-file .env -p 8080:80 inventario-formacion
 ```
+
+En Render: **Root Directory** vacío, **Dockerfile Path** = `Dockerfile`. Definir `SUPABASE_URL` y `SUPABASE_ANON_KEY` en Environment.
 
 ### Arranque local típico (XAMPP)
 

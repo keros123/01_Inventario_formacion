@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: inventario-formacion
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /login
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: productos
+      - key: DB_PREFIX
+        value: inv_form_
