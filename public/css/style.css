@@ -754,6 +754,7 @@ a .stat-card {
 }
 
 .calendario-dot.estado-pendiente { background: #ffc107; }
+.calendario-dot.estado-reprogramada { background: #2b579a; }
 .calendario-dot.estado-aprobada { background: #198754; }
 .calendario-dot.estado-rechazada { background: #dc3545; }
 .calendario-dot.estado-cancelada { background: #6c757d; }
@@ -840,9 +841,18 @@ a .stat-card {
 
 .calendario-evento.estado-pendiente { background: #e0a800; color: #212529; }
 .calendario-evento.estado-pendiente .calendario-evento-estado { opacity: 0.85; }
+.calendario-evento.estado-reprogramada { background: #2b579a; }
 .calendario-evento.estado-aprobada { background: #198754; }
 .calendario-evento.estado-rechazada { background: #dc3545; }
 .calendario-evento.estado-cancelada { background: #6c757d; }
+
+.calendario-grid.calendario-semana {
+    min-height: 360px;
+}
+
+.calendario-grid.calendario-semana .calendario-celda {
+    min-height: 280px;
+}
 
 @media (max-width: 768px) {
     .calendario-celda {

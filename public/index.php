@@ -63,6 +63,17 @@ $router->post('/solicitudes/aprobar', 'SolicitudesController@aprobar');
 $router->post('/solicitudes/rechazar', 'SolicitudesController@rechazar');
 $router->post('/solicitudes/cancelar', 'SolicitudesController@cancelar');
 
+$router->get('/agenda-computadores', 'AgendaComputadoresController@index');
+$router->get('/agenda-computadores/nueva', 'AgendaComputadoresController@nueva');
+$router->post('/agenda-computadores/store', 'AgendaComputadoresController@store');
+$router->get('/agenda-computadores/mis', 'AgendaComputadoresController@mis');
+$router->get('/agenda-computadores/pendientes', 'AgendaComputadoresController@pendientes');
+$router->get('/agenda-computadores/ver', 'AgendaComputadoresController@ver');
+$router->post('/agenda-computadores/aprobar', 'AgendaComputadoresController@aprobar');
+$router->post('/agenda-computadores/rechazar', 'AgendaComputadoresController@rechazar');
+$router->post('/agenda-computadores/reprogramar', 'AgendaComputadoresController@reprogramar');
+$router->post('/agenda-computadores/cancelar', 'AgendaComputadoresController@cancelar');
+
 $router->get('/cuentadantes', 'CuentadantesController@index');
 $router->get('/cuentadantes/create', 'CuentadantesController@create');
 $router->post('/cuentadantes/store', 'CuentadantesController@store');

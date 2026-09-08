@@ -140,6 +140,28 @@ Flujo de solicitud antes del préstamo formal.
 | Fecha_resolucion | DATETIME | |
 | Motivo_rechazo | TEXT | Obligatorio al rechazar |
 
+### Agenda_Computadores
+
+Reserva pública de portátiles (`inv_form_agenda_computadores`). Visible en calendario para todos los usuarios autenticados.
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| id_agenda | INT PK AI | |
+| Cedula_solicitante | VARCHAR(20) FK | → Usuarios |
+| Nombres | VARCHAR(150) | Nombre informado en el formulario |
+| Telefono | VARCHAR(20) | Móvil |
+| Fecha_solicitud | DATE | |
+| Cantidad_portatiles | INT | ≥ 1 |
+| Sede | VARCHAR | `Ternera`, `Emprender` |
+| Hora_inicio / Hora_final | TIME | Hora_final > Hora_inicio |
+| Ficha_programa | VARCHAR(150) | |
+| Estado | VARCHAR | `Pendiente`, `Reprogramada`, `Aprobada`, `Rechazada`, `Cancelada` |
+| Cedula_aprobador | VARCHAR(20) FK | Admin que resolvió |
+| Fecha_resolucion | TIMESTAMPTZ | |
+| Motivo_rechazo | TEXT | |
+| Fecha_original, Hora_*_original | | Horario previo a reprogramar |
+| Motivo_reprogramacion | TEXT | |
+
 ### Det_Solicitudes
 
 Líneas solicitadas (elementos y cantidades).

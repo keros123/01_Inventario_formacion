@@ -88,6 +88,11 @@
                     </a>
                 </li>
                 <?php endif; ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= $config['base_url'] ?>/agenda-computadores">
+                        <i class="bi bi-laptop"></i> Agenda computadores
+                    </a>
+                </li>
                 <?php if (Auth::isAdmin()): ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= $config['base_url'] ?>/reportes">

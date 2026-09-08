@@ -42,6 +42,17 @@
         </a>
     </div>
     <div class="col-md-4">
+        <a href="<?= $base ?>/agenda-computadores/pendientes" class="text-decoration-none">
+            <div class="stat-card<?= ($agendaPendientes ?? 0) > 0 ? ' stat-card-alert' : '' ?>">
+                <div class="stat-icon"><i class="bi bi-laptop"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value"><?= (int) ($agendaPendientes ?? 0) ?></span>
+                    <span class="stat-label">Agenda computadores pendientes</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
         <div class="stat-card">
             <div class="stat-icon"><i class="bi bi-shield-lock"></i></div>
             <div class="stat-info">
@@ -58,6 +69,17 @@
                 <div class="stat-info">
                     <span class="stat-value"><?= (int) ($misSolicitudesPendientes ?? 0) ?></span>
                     <span class="stat-label">Mis solicitudes pendientes</span>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="<?= $base ?>/agenda-computadores/mis" class="text-decoration-none">
+            <div class="stat-card<?= ($misAgendaPendientes ?? 0) > 0 ? ' stat-card-alert' : '' ?>">
+                <div class="stat-icon"><i class="bi bi-laptop"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value"><?= (int) ($misAgendaPendientes ?? 0) ?></span>
+                    <span class="stat-label">Mis reservas de portátiles</span>
                 </div>
             </div>
         </a>
@@ -99,6 +121,15 @@
             <a href="<?= $base ?>/solicitudes/pendientes" class="btn btn-outline-warning btn-sm">
                 <i class="bi bi-hourglass-split"></i> Solicitudes pendientes
             </a>
+            <a href="<?= $base ?>/agenda-computadores" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-laptop"></i> Agenda computadores
+            </a>
+            <a href="<?= $base ?>/agenda-computadores/nueva" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-plus-lg"></i> Reservar portátiles
+            </a>
+            <a href="<?= $base ?>/agenda-computadores/pendientes" class="btn btn-outline-warning btn-sm">
+                <i class="bi bi-hourglass-split"></i> Agenda pendientes
+            </a>
             <a href="<?= $base ?>/reportes" class="btn btn-outline-primary btn-sm">
                 <i class="bi bi-bar-chart"></i> Ver reportes
             </a>
@@ -114,6 +145,12 @@
             </a>
             <a href="<?= $base ?>/solicitudes/mis" class="btn btn-outline-primary btn-sm">
                 <i class="bi bi-list-check"></i> Mis solicitudes
+            </a>
+            <a href="<?= $base ?>/agenda-computadores" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-laptop"></i> Agenda computadores
+            </a>
+            <a href="<?= $base ?>/agenda-computadores/nueva" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-plus-lg"></i> Reservar portátiles
             </a>
             <?php endif; ?>
         </div>

@@ -128,6 +128,7 @@ Los archivos en `database/migrations/*.sql` son scripts manuales históricos; el
 | `InventarioController` | Login; escritura Admin | `InventarioModel`, `CategoriaModel` |
 | `MovimientosController` | Admin | `MovimientoModel`, `InventarioModel`, `CuentadanteModel` |
 | `SolicitudesController` | Login; acciones admin según método | `SolicitudPrestamoModel`, `InventarioModel` |
+| `AgendaComputadoresController` | Login; escritura usuario, resolución Admin | `AgendaComputadorModel` |
 | `UsuariosController` | Admin | `UsuarioModel` |
 | `CategoriasController` | Admin | `CategoriaModel` |
 | `ReportesController` | Admin | Varios |
@@ -142,6 +143,7 @@ Los archivos en `database/migrations/*.sql` son scripts manuales históricos; el
 | `UsuarioModel` | `Usuarios` |
 | `CategoriaModel` | `Categorias` |
 | `SolicitudPrestamoModel` | `Solicitudes_Prestamo`, `Det_Solicitudes` |
+| `AgendaComputadorModel` | `Agenda_Computadores` (`inv_form_agenda_computadores`) |
 | `CuentadanteModel` | Fachada sobre `UsuarioModel` (usuarios activos para préstamo) |
 
 ## Vistas

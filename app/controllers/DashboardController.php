@@ -6,6 +6,7 @@ require_once __DIR__ . '/../models/InventarioModel.php';
 require_once __DIR__ . '/../models/MovimientoModel.php';
 require_once __DIR__ . '/../models/UsuarioModel.php';
 require_once __DIR__ . '/../models/SolicitudPrestamoModel.php';
+require_once __DIR__ . '/../models/AgendaComputadorModel.php';
 
 class DashboardController extends Controller
 {
@@ -17,6 +18,7 @@ class DashboardController extends Controller
         $movimientoModel = new MovimientoModel();
         $usuarioModel = new UsuarioModel();
         $solicitudModel = new SolicitudPrestamoModel();
+        $agendaModel = new AgendaComputadorModel();
         $user = Auth::user();
         $esAdmin = Auth::isAdmin();
 
@@ -30,8 +32,11 @@ class DashboardController extends Controller
             $data['totalPrestamosActivos'] = $movimientoModel->countPrestamosActivos();
             $data['totalUsuarios'] = count($usuarioModel->getAll());
             $data['solicitudesPendientes'] = $solicitudModel->countPendientes();
+            $data['agendaPendientes'] = $agendaModel->countPendientes();
         } else {
             $data['misSolicitudesPendientes'] = $solicitudModel->countBySolicitante($user['cedula'], 'Pendiente');
+            $data['misAgendaPendientes'] = $agendaModel->countBySolicitante($user['cedula'], 'Pendiente')
+                + $agendaModel->countBySolicitante($user['cedula'], 'Reprogramada');
             $data['misPrestamosActivos'] = $movimientoModel->countPrestamosActivosPorCedula($user['cedula']);
         }
 

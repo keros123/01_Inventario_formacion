@@ -67,13 +67,13 @@ $_SESSION['user'] = [
 
 Acceso completo desde el sidebar:
 
-- Panel, Inventario, Categorías, Movimientos, Préstamos, Solicitudes (calendario), Reportes, Usuarios.
+- Panel, Inventario, Categorías, Movimientos, Préstamos, Solicitudes (calendario), Agenda computadores, Reportes, Usuarios.
 
 ### Usuario (`Tipo = 'Usuario'`)
 
 Sidebar reducido:
 
-- Panel, Inventario (solo consulta), Nueva solicitud, Calendario, Mis solicitudes.
+- Panel, Inventario (solo consulta), Nueva solicitud, Calendario, Mis solicitudes, Agenda computadores.
 
 La visibilidad se controla en `app/views/layouts/main.php` con `Auth::isAdmin()`.
 
