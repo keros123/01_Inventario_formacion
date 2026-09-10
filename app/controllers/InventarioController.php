@@ -157,9 +157,16 @@ class InventarioController extends Controller
     {
         Auth::requireAdmin();
         $codigo = $_POST['codigo'] ?? '';
-        if ($codigo) {
+        if ($codigo === '') {
+            $this->redirect('/inventario');
+            return;
+        }
+
+        try {
             $this->model->delete($codigo);
             $this->setFlash('success', 'Elemento eliminado.');
+        } catch (RuntimeException $e) {
+            $this->setFlash('danger', $e->getMessage());
         }
         $this->redirect('/inventario');
     }

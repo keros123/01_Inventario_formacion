@@ -89,7 +89,25 @@ class InventarioModel extends Model
 
     public function delete(string $codigo): bool
     {
-        $this->from('Inventario')->eq('Codigo', $codigo)->update(['Estado' => 'Eliminado']);
+        try {
+            $this->from('Inventario')->eq('Codigo', $codigo)->update(['Estado' => 'Eliminado']);
+            return true;
+        } catch (RuntimeException $e) {
+            if (stripos($e->getMessage(), 'Estado_check') === false) {
+                throw $e;
+            }
+        }
+
+        try {
+            $this->from('Inventario')->eq('Codigo', $codigo)->delete();
+            return true;
+        } catch (RuntimeException $e) {
+            if (stripos($e->getMessage(), 'foreign key') === false) {
+                throw $e;
+            }
+        }
+
+        $this->from('Inventario')->eq('Codigo', $codigo)->update(['Estado' => 'Inactivo']);
         return true;
     }
 

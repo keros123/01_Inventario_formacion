@@ -29,6 +29,16 @@ $queryBase = array_filter([
     <?php endif; ?>
 </div>
 
+<?php if (!empty($errors)): ?>
+<div class="alert alert-danger">
+    <ul class="mb-0">
+        <?php foreach ($errors as $err): ?>
+        <li><?= htmlspecialchars($err) ?></li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>
+
 <div class="card mb-3">
     <div class="card-body">
         <form method="GET" action="<?= $config['base_url'] ?>/reportes" class="row g-3" id="formReportes">

@@ -256,10 +256,23 @@ class Database
             $extra[] = 'Prefer: ' . implode(',', $prefer);
         }
 
-        $response = self::http($method, $url, $body, $extra);
+        $response = ['status' => 0, 'body' => '', 'headers' => []];
+        $attempts = 0;
+        do {
+            $attempts++;
+            $response = self::http($method, $url, $body, $extra);
+            $transient = in_array($response['status'], [0, 502, 503, 504], true);
+            if (!$transient || $attempts >= 3) {
+                break;
+            }
+            usleep(250000 * $attempts);
+        } while (true);
+
         if ($response['status'] >= 400) {
             $decoded = json_decode($response['body'], true);
-            $message = $decoded['message'] ?? $response['body'] ?: ('HTTP ' . $response['status']);
+            $message = is_array($decoded)
+                ? (string) ($decoded['message'] ?? $decoded['error'] ?? $response['body'])
+                : ($response['body'] ?: ('HTTP ' . $response['status']));
             throw new RuntimeException('Supabase REST: ' . $message);
         }
 

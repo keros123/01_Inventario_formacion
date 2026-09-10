@@ -29,11 +29,23 @@ class ReportesController extends Controller
         $filters = $this->getFilters();
         $tipoReporte = $_GET['reporte'] ?? 'movimientos';
         $resultados = [];
+        $categorias = [];
+        $cuentadantes = [];
+        $errors = [];
 
-        if ($this->hasSearch($filters, $tipoReporte)) {
-            $resultados = $tipoReporte === 'inventario'
-                ? $this->inventarioModel->getForReport($filters)
-                : $this->movimientoModel->getReporteMovimientos($filters);
+        try {
+            if ($this->hasSearch($filters, $tipoReporte)) {
+                $resultados = $tipoReporte === 'inventario'
+                    ? $this->inventarioModel->getForReport($filters)
+                    : $this->movimientoModel->getReporteMovimientos($filters);
+            }
+            $categorias = $this->categoriaModel->getActivas();
+            $cuentadantes = $this->usuarioModel->getActivosParaPrestamo();
+        } catch (RuntimeException $e) {
+            $message = $e->getMessage();
+            $errors[] = stripos($message, 'timeout') !== false
+                ? 'Supabase tardó demasiado en responder. Espere unos segundos e intente de nuevo.'
+                : $message;
         }
 
         $this->view('reportes/index', [
@@ -41,8 +53,9 @@ class ReportesController extends Controller
             'filters'      => $filters,
             'tipoReporte'  => $tipoReporte,
             'resultados'   => $resultados,
-            'categorias'   => $this->categoriaModel->getActivas(),
-            'cuentadantes' => $this->usuarioModel->getActivosParaPrestamo(),
+            'categorias'   => $categorias,
+            'cuentadantes' => $cuentadantes,
+            'errors'       => $errors,
         ]);
     }
 

@@ -211,9 +211,21 @@ class MovimientoModel extends Model
 
         $ids = array_column($movimientos, 'id_movimiento');
         $detalles = $this->from('Det_Movimientos')->in('id_movimiento', $ids)->eq('Estado', 'Activo')->order('id_Detalle')->get();
-        $inventario = $this->mapBy($this->from('Inventario')->get(), 'Codigo');
-        $categorias = $this->mapBy($this->from('Categorias')->get(), 'id_categoria');
-        $usuarios = $this->mapBy($this->from('Usuarios')->select('Cedula,Nombres')->get(), 'Cedula');
+        $inventario = $this->mapBy(
+            $this->from('Inventario')->select('Codigo,Elemento,id_categoria')->get(),
+            'Codigo'
+        );
+        $categorias = $this->mapBy(
+            $this->from('Categorias')->select('id_categoria,Nombre')->get(),
+            'id_categoria'
+        );
+        $cedulas = array_values(array_unique(array_filter(array_column($movimientos, 'Cedula_cuentadante'))));
+        $usuarios = $cedulas === []
+            ? []
+            : $this->mapBy(
+                $this->from('Usuarios')->select('Cedula,Nombres')->in('Cedula', $cedulas)->get(),
+                'Cedula'
+            );
         $movMap = $this->mapBy($movimientos, 'id_movimiento');
 
         $refIds = array_filter(array_column($movimientos, 'id_movimiento_ref'));
@@ -612,7 +624,9 @@ class MovimientoModel extends Model
             ->first();
         $consecutivo = (int) ($ultimo['Consecutivo'] ?? 0) + 1;
 
-        $row = $this->from('Movimientos')->insert([
+        $this->asegurarCuentadante($data['cedula_cuentadante'] ?? null);
+
+        $row = [
             'Tipo'               => $tipo,
             'Consecutivo'        => $consecutivo,
             'Fecha'              => $data['fecha'],
@@ -620,9 +634,53 @@ class MovimientoModel extends Model
             'Descripcion'        => $data['descripcion'] ?? null,
             'Estado'             => 'Activo',
             'id_movimiento_ref'  => $data['id_movimiento_ref'] ?? null,
-        ]);
+        ];
 
-        return (int) ($row['id_movimiento'] ?? 0);
+        // Columnas heredadas del dump original; la tabla en vivo aún las exige.
+        $legacy = [
+            'id_cuentadante' => (int) ($data['id_cuentadante'] ?? 0),
+            'Uso'            => $data['uso'] ?? 'Formacion',
+        ];
+
+        try {
+            $inserted = $this->from('Movimientos')->insert($row + $legacy);
+        } catch (RuntimeException $e) {
+            if (!preg_match('/Could not find.*(id_cuentadante|Uso)/i', $e->getMessage())) {
+                throw $e;
+            }
+            $inserted = $this->from('Movimientos')->insert($row);
+        }
+
+        return (int) ($inserted['id_movimiento'] ?? 0);
+    }
+
+    /**
+     * La FK viva sigue apuntando a Cuentadantes, no a Usuarios.
+     * Replica ahí la cédula del movimiento para no romper el insert.
+     */
+    private function asegurarCuentadante(?string $cedula): void
+    {
+        $cedula = trim((string) $cedula);
+        if ($cedula === '') {
+            return;
+        }
+
+        try {
+            if ($this->from('Cuentadantes')->eq('Cedula', $cedula)->first()) {
+                return;
+            }
+
+            $user = $this->from('Usuarios')->eq('Cedula', $cedula)->first();
+            $this->from('Cuentadantes')->insert([
+                'Cedula'  => $cedula,
+                'Nombres' => $user['Nombres'] ?? $cedula,
+                'Estado'  => 'Activo',
+            ]);
+        } catch (RuntimeException $e) {
+            if (!preg_match('/Could not find|does not exist|PGRST205/i', $e->getMessage())) {
+                throw $e;
+            }
+        }
     }
 
     private function crearDetalle(int $idMovimiento, int $idDetalle, string $codigoElemento, int $cantidad): void
